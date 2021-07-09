@@ -92,6 +92,9 @@ votes por fraction_votes (votes/fraction_votes), finalmente ordene de forma
 descendente por vote_count.
 
 ```{r}
-
+dataset_results %>%
+  filter(party == "Republican" & candidate == "Ted Cruz" & state == "Alaska") %>%
+  mutate(vote_count = votes / fraction_votes) %>%
+  arrange(desc(vote_count))
 ```
 
