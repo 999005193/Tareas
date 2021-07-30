@@ -1,0 +1,21 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+MAESTRÍA EN INGENIERÍA PARA LA INDUSTRIA CON ESPECIALIDAD EN CIENCIAS DE LA COMPUTACIÓN
+Tarea 5 - Fundamentos de programación y scripting
+
+Marlon Vinicio Peralta García
+2335021060101
+
+```{r}
+library(tidyverse)
+
+questions <- read_csv("questions.csv")
+answers <- read_csv("answers.csv")
+tags <- read_csv("tags.csv")
+question_tags <- read_csv("question_tags.csv")
+
+```
+
