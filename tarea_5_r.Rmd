@@ -6,8 +6,7 @@ output: html_notebook
 MAESTRÍA EN INGENIERÍA PARA LA INDUSTRIA CON ESPECIALIDAD EN CIENCIAS DE LA COMPUTACIÓN
 Tarea 5 - Fundamentos de programación y scripting
 
-Marlon Vinicio Peralta García
-2335021060101
+Marlon Peralta
 
 ```{r}
 library(tidyverse)
@@ -109,4 +108,63 @@ questions %>%
   mutate(gap = creation_date_answer - creation_date_question)
 ```
 4. Joining question and answer counts
+
+4.1. Cuente y ordene la columna question_id en la tabla de answers, luego almacene el resultado en la variable answer_counts.
+
+```{r}
+answers %>%
+  count(question_id) %>%
+  arrange(desc(n))
+
+answer_counts <- answers %>%
+  count(question_id) %>%
+  arrange(desc(n))
+```
+
+4.2. Relacione la tabla questions con answer_counts (utilice left_join).
+
+```{r}
+questions %>%
+  left_join(answer_counts, by = c("id" = "question_id"))
+```
+
+4.3. Reemplace los valores NA en la columna n con ceros.
+
+```{r}
+questions %>%
+  left_join(answer_counts, by = c("id" = "question_id")) %>%
+  replace_na(list(n=0))
+```
+
+4.4. Por último almacene el resultado en la variable question_answer_counts
+
+```{r}
+question_answer_counts <- questions %>%
+  left_join(answer_counts, by = c("id" = "question_id")) %>%
+  replace_na(list(n=0))
+
+question_answer_counts
+```
+5. Joining questions, answers, and tags
+
+5.1. Combine question_tags con question_answer_counts usando inner_join.
+
+```{r}
+question_tags %>%
+  inner_join(question_answer_counts, by = c("question_id" = "id"))
+```
+
+5.2. Ahora, use otro inner_join para agregar la tabla tags.
+
+```{r}
+question_tags %>%
+  inner_join(question_answer_counts, by = c("question_id" = "id")) %>%
+  inner_join(tags, by = c("tag_id" = "id"))
+
+question_tags %>%
+  inner_join(question_answer_counts, by = c("question_id" = "id")) %>%
+  inner_join(tags, by = c("tag_id" = "id")) %>%
+  arrange(desc(n))
+
+```
 
